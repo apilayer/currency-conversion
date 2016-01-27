@@ -1,32 +1,25 @@
 {
-  "name": "screenshot-capture",
+  "name": "currency-conversion",
   "version": "0.1.0",
-  "description": "screenshotlayer is a lightweight REST API built to deliver high quality PNG, JPEG & GIF website screenshots at unparalleled speeds and through a simple interface.",
+  "description": "Free and startup-friendly currency converter JSON API for real-time and historical exchange rates - reliable and accurate, supporting 168 world currencies.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://pmoelgaard@github.com/pmoelgaard/screenshot-capture.git"
+    "url": "git+https://pmoelgaard@github.com/pmoelgaard/currency-conversion.git"
   },
   "keywords": [
-    "screenshot",
-    "api",
-    "url",
-    "to",
-    "screenshot",
-    "url",
-    "to",
-    "png",
-    "screenshot",
-    "automation",
-    "api"
+    "exchange rates api",
+    "currency conversion api",
+    "currency converter api",
+    "json exchange rates"
   ],
   "author": "Peter Andreas Moelgaard <admin@petermolgard.com> (http://petermolgaard.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pmoelgaard/screenshot-capture/issues"
+    "url": "https://github.com/pmoelgaard/currency-conversion/issues"
   },
-  "homepage": "https://github.com/pmoelgaard/screenshot-capture#readme"
+  "homepage": "https://github.com/pmoelgaard/currency-conversion#readme"
 }
