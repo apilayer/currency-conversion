@@ -10,7 +10,7 @@ var APIError = require('../lib/apirequest-error');
 var API;
 
 /**
- * Live Currency Rates
+ * Change Currency Rates
  *
  * @param  {object} params - Parameters for request
  * @param  {callback} callback - The callback that handles the response.
@@ -28,7 +28,6 @@ API = function (params, callback, options) {
 
     // Declare the promise we will use to wrap the request call
     var promise = new Promise(function (resolve, reject) {
-
 
         // Input Validation (we only do the most basic, and let the server do the most so validation will always be up to date)
         if (!params) {
@@ -79,9 +78,30 @@ API = function (params, callback, options) {
     return promise;
 };
 
-API.SERVICE_NAME = 'live';
+
+var ChangeQuery = function (start_date, end_date, currencies, source) {
+    this.start_date = start_date;
+    this.end_date = end_date;
+    this.currencies = currencies;
+    this.source = source;
+};
+API.ChangeQuery = ChangeQuery;
+
+
+API.SERVICE_NAME = 'change';
 API.SERVICE_METHOD = 'GET';
 API.CONTENT_EXPR = 'quotes';
+API.PARAM_START_DATE = 'start_date';
+API.PARAM_START_DATE_PATTERN = 'YYYY-MM-DD';
+API.PARAM_END_DATE = 'end_date';
+API.PARAM_END_DATE_PATTERN = 'YYYY-MM-DD';
+API.PARAM_CURRENCIES = 'currencies';
+API.PARAM_SOURCE = 'source';
+API.RESULT_START_RATE = 'start_rate';
+API.RESULT_END_RATE = 'end_rate';
+API.RESULT_CHANGE = 'change';
+API.RESULT_CHANGE_PCT = 'change_pct';
+
 
 /**
  * Exports the APIs

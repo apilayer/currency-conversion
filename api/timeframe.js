@@ -10,7 +10,7 @@ var APIError = require('../lib/apirequest-error');
 var API;
 
 /**
- * Live Currency Rates
+ * Timeframe Currency Rates
  *
  * @param  {object} params - Parameters for request
  * @param  {callback} callback - The callback that handles the response.
@@ -29,10 +29,19 @@ API = function (params, callback, options) {
     // Declare the promise we will use to wrap the request call
     var promise = new Promise(function (resolve, reject) {
 
-
         // Input Validation (we only do the most basic, and let the server do the most so validation will always be up to date)
         if (!params) {
             return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params'));
+        }
+        else if (!_.has(params, API.PARAM_START_DATE)) {
+            return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_START_DATE));
+        }
+        else if (!_.has(params, API.PARAM_END_DATE)) {
+            return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_END_DATE));
+        }
+
+        if (!_.has(params, API.PARAM_CURRENCIES) || _.isNull(_.get(params, API.PARAM_CURRENCIES))) {
+            console.warn(new APIError.MissingRecommendedArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_CURRENCIES).message);
         }
 
         params = _.clone(params);
@@ -79,9 +88,26 @@ API = function (params, callback, options) {
     return promise;
 };
 
-API.SERVICE_NAME = 'live';
+
+var TimeframeQuery = function (start_date, end_date, currencies, source) {
+    this.start_date = start_date;
+    this.end_date = end_date;
+    this.currencies = currencies;
+    this.source = source;
+};
+API.TimeframeQuery = TimeframeQuery;
+
+
+API.SERVICE_NAME = 'timeframe';
 API.SERVICE_METHOD = 'GET';
 API.CONTENT_EXPR = 'quotes';
+API.PARAM_START_DATE = 'start_date';
+API.PARAM_START_DATE_PATTERN = 'YYYY-MM-DD';
+API.PARAM_END_DATE = 'end_date';
+API.PARAM_END_DATE_PATTERN = 'YYYY-MM-DD';
+API.PARAM_CURRENCIES = 'currencies';
+API.PARAM_SOURCE = 'source';
+
 
 /**
  * Exports the APIs

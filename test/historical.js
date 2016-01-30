@@ -18,25 +18,22 @@ var chai = require('chai');
 var expect = chai.expect;
 var assert = require('assert');
 
-describe('#live()', function () {
+describe('#historical()', function () {
 
     it('SGD as source against USD + THB', function (done) {
+
+        var historical = api.get('historical');
 
         this.timeout(10000);
 
         var source = 'SGD';
         var currencies = ['USD', 'THB'];
 
-        var liveQuery = {
-            source: source,
-            currencies: currencies.join(',')
-        };
-
-        var live = api.live;
-        live(liveQuery)
+        var query = new historical.HistoricalQuery('2005-02-01', currencies, source);
+        historical(query)
             .then(function (result) {
 
-                result = _.get(result, live.CONTENT_EXPR);
+                result = _.get(result, historical.CONTENT_EXPR);
 
                 assert.equal(2, _.keys(result).length);
 

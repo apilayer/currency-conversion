@@ -3,10 +3,9 @@
 var _ = require('lodash');
 var utils = require('../lib/utils');
 var Promise = require('../lib/promise');
-var APIResult = require('../lib/apirequest-result');
 
 // Declare our main module scope
-var API = {};
+var API;
 
 /**
  * List of Supported Currencies
@@ -15,7 +14,7 @@ var API = {};
  * @param  {callback} callback - The callback that handles the response.
  * @return {object} Result
  */
-API.list = function (params, callback) {
+API = function (params, callback) {
 
     // Ensure callback is set to make the main functions slightly simpler by avoiding nested conditionals
     callback = callback || _.noop;
@@ -23,8 +22,8 @@ API.list = function (params, callback) {
 
     // Set Options for the Request
     var options = utils.extend({}, this.options, {
-            service: 'list',
-            method: 'GET'
+            service: API.SERVICE_NAME,
+            method: API.SERVICE_METHOD
         }
     );
 
@@ -48,9 +47,6 @@ API.list = function (params, callback) {
                 return reject(err);
             }
 
-            // parse the results to make the caller only get the actual data and hide the transport information
-            result = _.get(result, APIResult.BODY_LIST_EXPR);
-
             // and we resolve and return (not necessary to return, but keeps consistency)
             return resolve(result);
         });
@@ -72,6 +68,9 @@ API.list = function (params, callback) {
     return promise;
 };
 
+API.SERVICE_NAME = 'list';
+API.SERVICE_METHOD = 'GET';
+API.CONTENT_EXPR = 'currencies';
 
 /**
  * Exports the APIs

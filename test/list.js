@@ -1,8 +1,7 @@
+var _ = require('lodash');
 var path = require('path');
 var async = require('async');
-
 var utils = require('../lib/utils');
-
 
 var APIPath = path.join(__dirname, '../', 'index');
 var API = require(APIPath);
@@ -34,8 +33,12 @@ describe('#list()', function () {
 
                 },
                 function (currencies, stepCallback) {
-                    api.list()
+                    var list = api.list;
+                    list()
                         .then(function (result) {
+
+                            // parse the results to make the caller only get the actual data and hide the transport information
+                            result = _.get(result, list.CONTENT_EXPR);
 
                             var diff1 = utils.difference(currencies, result);
                             assert.equal(0, diff1.length, 'Following currencies are not found in the currencies service: ' + diff1);

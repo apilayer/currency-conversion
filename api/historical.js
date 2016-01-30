@@ -10,7 +10,7 @@ var APIError = require('../lib/apirequest-error');
 var API;
 
 /**
- * Live Currency Rates
+ * Historical Currency Rates
  *
  * @param  {object} params - Parameters for request
  * @param  {callback} callback - The callback that handles the response.
@@ -29,10 +29,12 @@ API = function (params, callback, options) {
     // Declare the promise we will use to wrap the request call
     var promise = new Promise(function (resolve, reject) {
 
-
         // Input Validation (we only do the most basic, and let the server do the most so validation will always be up to date)
         if (!params) {
             return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params'));
+        }
+        else if (!_.has(params, API.PARAM_DATE)) {
+            return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_DATE));
         }
 
         params = _.clone(params);
@@ -79,9 +81,21 @@ API = function (params, callback, options) {
     return promise;
 };
 
-API.SERVICE_NAME = 'live';
+
+var HistoricalQuery = function (date, currencies, source) {
+    this.date = date;
+    this.currencies = currencies;
+    this.source = source;
+};
+API.HistoricalQuery = HistoricalQuery;
+
+
+API.SERVICE_NAME = 'historical';
 API.SERVICE_METHOD = 'GET';
 API.CONTENT_EXPR = 'quotes';
+API.PARAM_DATE = 'date';
+API.PARAM_DATE_PATTERN = 'YYYY-MM-DD';
+
 
 /**
  * Exports the APIs

@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var utils = require('./lib/utils');
 
 /**
@@ -42,7 +43,10 @@ function API(options) {
  */
 API.prototype.addAPIs = function (apis) {
     for (var apiName in apis) {
-        this[apiName] = apis[apiName].bind(this);
+        var API = apis[apiName];
+        var api = API.bind(this);
+        _.extend(api, API);
+        this[apiName] = api;
     }
 };
 
