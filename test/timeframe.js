@@ -46,7 +46,8 @@ describe('#timeframe()', function () {
                     var quote = _.get(result, quoteKey);
 
                     var quoteKeys = _.keys(quote);
-                    expect(quoteKeys).to.have.length(currencies.length);
+                    var expectedLength = currencies.length;
+                    expect(quoteKeys).to.have.length(expectedLength);
 
                     _.every(quoteKeys, function (quoteKey) {
                         expect(_.get(quote, quoteKey)).to.be.a('number');
