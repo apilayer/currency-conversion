@@ -39,7 +39,7 @@ describe('#timeframe()', function () {
 
                 result = _.get(result, timeframe.CONTENT_EXPR);
 
-                var expectedDuration = duration.length + 1;
+                var expectedDuration = duration;
                 expect(_.keys(result)).to.have.length(expectedDuration); // The API returns both days inclusive, so we need to add 1 to the requested duration
 
                 _.map(_.keys(result), function (quoteKey) {
