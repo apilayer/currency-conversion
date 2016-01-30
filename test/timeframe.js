@@ -39,15 +39,14 @@ describe('#timeframe()', function () {
 
                 result = _.get(result, timeframe.CONTENT_EXPR);
 
-                expect(_.keys(result)).to.have.length(duration); // The API returns both days inclusive, so we need to add 1 to the requested duration
+                var expectedDuration = duration.length + 1;
+                expect(_.keys(result)).to.have.length(expectedDuration); // The API returns both days inclusive, so we need to add 1 to the requested duration
 
                 _.map(_.keys(result), function (quoteKey) {
 
                     var quote = _.get(result, quoteKey);
 
                     var quoteKeys = _.keys(quote);
-                    var expectedLength = currencies.length + 1;
-                    expect(quoteKeys).to.have.length(expectedLength);
 
                     _.every(quoteKeys, function (quoteKey) {
                         expect(_.get(quote, quoteKey)).to.be.a('number');
