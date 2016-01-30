@@ -4,7 +4,7 @@
   "description": "Free and startup-friendly currency converter JSON API for real-time and historical exchange rates - reliable and accurate, supporting 168 world currencies.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
@@ -32,5 +32,6 @@
     "moment": "^2.11.1",
     "promise": "^7.1.1",
     "request": "^2.69.0"
-  }
+  },
+  "tonicExampleFilename": "example/preview.js"
 }
