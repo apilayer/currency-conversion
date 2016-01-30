@@ -1,5 +1,6 @@
 var path = require('path');
 var async = require('async');
+var moment = require('moment');
 var _ = require('lodash');
 
 var utils = require('../lib/utils');

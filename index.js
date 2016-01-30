@@ -22,7 +22,8 @@ function API(options) {
             host: 'apilayer.net',
             context: 'api',
             key_type: 'access_key',
-            secure: false
+            secure: false,
+            followRedirect: false
         }
     );
 
@@ -42,10 +43,13 @@ function API(options) {
  * @private
  */
 API.prototype.addAPIs = function (apis) {
+
     for (var apiName in apis) {
+
         var API = apis[apiName];
         var api = API.bind(this);
         _.extend(api, API);
+
         this[apiName] = api;
     }
 };
