@@ -28,8 +28,8 @@ describe('#change()', function () {
 
         var duration = 7;
 
-        var start_date = moment().subtract(duration, 'days').format(change.PARAM_START_DATE_PATTERN);
-        var end_date = moment().format(change.PARAM_END_DATE_PATTERN);
+        var start_date = null; // moment().subtract(duration, 'days').format(change.PARAM_START_DATE_PATTERN);
+        var end_date = null; // moment().format(change.PARAM_END_DATE_PATTERN);
         var currencies = ['USD', 'THB'];
         var source = 'SGD';
 

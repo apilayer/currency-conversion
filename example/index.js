@@ -9,7 +9,7 @@ var api = new API({
 });
 
 
-// LIVE
+ LIVE
 var listQuery = {};
 api.list(listQuery, function (err, result) {
     if (err) {
@@ -23,14 +23,21 @@ var liveQuery = {
     source: 'SGD',
     currencies: ['USD', 'THB']
 };
-var liveOptions = {refreshRate: moment.duration(3, 'seconds').asMilliseconds()};
 api.live(liveQuery, function (err, result) {
     if (err) {
         return console.log('Live Callback (Error): ' + JSON.stringify(err));
     }
     console.log('Live Callback (Result): ' + JSON.stringify(result));
-}, liveOptions || null);
+});
 
-(function wait() {
-    if (true) setTimeout(wait, 10000);
-})();
+// CHANGE
+var changeQuery = {
+    source: 'SGD',
+    currencies: ['USD', 'THB']
+};
+api.change(changeQuery, function (err, result) {
+    if (err) {
+        return console.log('Change Callback (Error): ' + JSON.stringify(err));
+    }
+    console.log('Change Callback (Result): ' + JSON.stringify(result));
+});

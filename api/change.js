@@ -25,7 +25,6 @@ API = function (params, callback, options) {
         }
     );
 
-
     // Declare the promise we will use to wrap the request call
     var promise = new Promise(function (resolve, reject) {
 
