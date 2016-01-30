@@ -1,6 +1,6 @@
 {
   "name": "currency-conversion",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Free and startup-friendly currency converter JSON API for real-time and historical exchange rates - reliable and accurate, supporting 168 world currencies.",
   "main": "index.js",
   "scripts": {
