@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/pmoelgaard/currency-conversion#readme",
   "devDependencies": {
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
     "chai": "^3.4.1",
     "dotenv": "^2.0.0"
   },
