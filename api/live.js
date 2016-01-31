@@ -5,6 +5,7 @@ var _ = require('lodash');
 var utils = require('../lib/utils');
 var Promise = require('../lib/promise');
 var APIError = require('../lib/apirequest-error');
+var APIResult = require('../lib/apirequest-result');
 
 
 // Declare our main module scope
@@ -22,7 +23,8 @@ API = function (params, callback, options) {
 
     options = utils.defaults({}, options, this.options, {
             service: API.SERVICE_NAME,
-            method: API.SERVICE_METHOD
+            method: API.SERVICE_METHOD,
+            transporter: 'http'
         }
     );
 
@@ -31,15 +33,14 @@ API = function (params, callback, options) {
     var promise = new Promise(function (resolve, reject) {
 
 
-
         // Input Validation (we only do the most basic, and let the server do the most so validation will always be up to date)
         if (!params) {
             return reject(new APIError.MissingArgumentError(API.SERVICE_NAME, 'params'));
         }
 
-        if (_.has(options, API.PARAM_REFRESH_RATE)) {
-            return reject(new APIError.NotSupportedArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_REFRESH_RATE));
-        }
+        //if (_.has(options, API.PARAM_REFRESH_RATE)) {
+        //    return reject(new APIError.NotSupportedArgumentError(API.SERVICE_NAME, 'params.' + API.PARAM_REFRESH_RATE));
+        //}
 
         var $params = _.clone(params);
         $params.currencies = _.isArray($params.currencies) ? $params.currencies.join(',') : $params.currencies;
@@ -59,10 +60,8 @@ API = function (params, callback, options) {
 
             var etag = _.get(lastResponse.headers, 'etag');
             _.set($params.options.headers, 'If-None-Match', etag);
-            console.log('Etag: '+ etag);
 
             var date = _.get(lastResponse.headers, 'date');
-            console.log('Date: '+ date);
             _.set($params.options.headers, 'If-Modified-Since', date);
         }
 
@@ -79,10 +78,22 @@ API = function (params, callback, options) {
                 return reject(err);
             }
 
-            API.lastResponse = response;
-
-            if(_.isNull(result) && _.has(response, API.CONTENT_EXPR)) {
+            if (_.isNull(result) && _.has(response, API.CONTENT_EXPR)) {
                 result = _.get(response, API.CONTENT_EXPR);
+            }
+            else if (_.isNull(result) && _.has(response, APIResult.BODY_EXPR)) {
+                result = _.get(API.lastResponse, APIResult.BODY_EXPR);
+            }
+
+            switch(response.statusCode) {
+
+                case APIResult.OK:
+                    API.lastResponse = response;
+                    break;
+
+                case APIResult.NOT_CHANGED:
+                    result = _.get(API.lastResponse, APIResult.BODY_EXPR);
+                    break;
             }
 
             // and we resolve and return (not necessary to return, but keeps consistency)
@@ -111,7 +122,7 @@ API = function (params, callback, options) {
 API.SERVICE_NAME = 'live';
 API.SERVICE_METHOD = 'GET';
 API.CONTENT_EXPR = 'quotes';
-API.PARAM_REFRESH_RATE = 'refreshRate';
+API.PARAM_REFRESH_RATE = 'refresh_rate';
 
 API.lastResponse = null;
 

@@ -3,24 +3,20 @@ Node JavaScript wrapper for [the currencylayer API](https://currencylayer.com/).
 
 Supports both traditional callbacks and Promises/A+.
 
-&nbsp;
-
-Installation
 ---
+
+## Installation
 	npm install currency-conversion [--save]
 
-&nbsp;
 
-Configuration
----
+## Configuration
 
 Before using the currencylayer API client you have to setup your account and obtain your API Access Key.  
 You can get it by signing up at [https://currencylayer.com/product](https://currencylayer.com/product).
 
-&nbsp;
-
-Usage
 ---
+
+## Usage
 
 The general API is documented here: [https://currencylayer.com/documentation](https://currencylayer.com/documentation).  
 You can find parameters, result set definitions and status codes documented here as well.
@@ -39,6 +35,7 @@ You can find parameters, result set definitions and status codes documented here
 ##### Secure (only available for Basic, Pro and Enterprise accounts)
 Boolean value to indicate if the calls to the API should use a secure protocol or insecure (HTTP/HTTPS). Defaults to false (HTTP, insecure).
 
+---
 
 ## Callbacks vs. Promises
 
@@ -47,7 +44,20 @@ The Promises/A+ implementation used for this is this excellent bare bones librar
 
 The language-detection library supports either mode and use of either one is not mutually exclusive to the alternative, so it's possible to use one exclusively or a combination, even in the same call, both the callback will be called and the promise handlers invoked.
 
-    
+---
+
+## API Overview
+All endpoints in the public API is available through this library.
+
+- live
+- list
+- change
+- convert
+- historical
+- timeframe
+
+---
+
 ## Live
 Takes a simple string and detects the language with a list of detections.
 
@@ -80,6 +90,24 @@ Takes a simple string and detects the language with a list of detections.
   		}
 	}
 	
+#### Automatic Refresh
+
+The Live API accepts a third argument which contains the options for the operation of the API.  
+
+```
+var liveOptions = {
+    refresh_rate: [interval in milliseconds]
+};
+```
+
+When the refresh_rate option is added, the API will update automatically and invoke the callbacks and promises accordingly. The example application illustrates this.
+
+Internally the API uses the ETag and Date headers in the responses and If-None-Match and If-Modified-Since correspondingly on the requests. This reduces the payload sent from the server by utilising the 304 HTTP codes to use data from the internal cache instead of retrieving identical values from the server.
+ 
+[https://currencylayer.com/documentation](https://currencylayer.com/documentation)
+
+---
+
 ## Example Application
 
 In the [rootdir]/example directory there is a fully functional application which runs all requests against all the endpoints in the API, the examples above can be seen there as source code.
@@ -88,27 +116,37 @@ The example application uses a process.env variable to hold the access key.
 
 For running in development environments, it's easy to use the [https://www.npmjs.com/package/dotenv](https://www.npmjs.com/package/dotenv) to load variables from a local file into the environment.
 
+---
+
 ## Tests [![Travis](https://img.shields.io/travis/pmoelgaard/currency-conversion.svg)](Travis)
 
 The tests are written for any NodeJS testing library, but has been run and targeted at the [https://mochajs.org/](https://mochajs.org/) testing library.
+
+---
 
 ## Customer Support
 
 Need any assistance? [Get in touch with Customer Support](mailto:support@apilayer.net?subject=%5Blanguagelayer%5D).
 
+---
+
 ## Updates
 Stay up to date by following [@apilayernet](https://twitter.com/apilayernet) on Twitter.
+
+---
 
 ## Legal
 
 All usage of the languagelayer website, API, and services is subject to the [languagelayer Terms & Conditions](https://languagelayer.com/terms) and all annexed legal documents and agreements.
 
-Author
 ---
+
+## Author
 Peter Andreas Moelgaard ([GitHub](https://github.com/pmoelgaard), [Twitter](https://twitter.com/petermoelgaard))
 
-License
 ---
+
+## License
 Licensed under the The MIT License (MIT)
 
 Copyright (&copy;) 2016 Peter Andreas Moelgaard & apilayer
