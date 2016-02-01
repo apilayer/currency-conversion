@@ -118,7 +118,7 @@ For running in development environments, it's easy to use the [https://www.npmjs
 
 ---
 
-## Tests [![Travis](https://travis-ci.org/pmoelgaard/currency-conversion.svg?branch=master)](Travis)
+## Tests [![Travis](https://travis-ci.org/apilayer/currency-conversion.svg)](Travis)
 
 The tests are written for any NodeJS testing library, but has been run and targeted at the [https://mochajs.org/](https://mochajs.org/) testing library.
 
