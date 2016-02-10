@@ -126,7 +126,7 @@ The tests are written for any NodeJS testing library, but has been run and targe
 
 ## Customer Support
 
-Need any assistance? [Get in touch with Customer Support](mailto:support@apilayer.net?subject=%5Blanguagelayer%5D).
+Need any assistance? [Get in touch with Customer Support](mailto:support@apilayer.net?subject=%5Bcurrencylayer%5D).
 
 ---
 
